@@ -5,7 +5,7 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, Form, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 
@@ -70,7 +70,9 @@ class Shipment(Base):
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="SwiftCourier 3 File Version")
+app = FastAPI(title="Quick Courier")
+
+BASE_DIR = Path(__file__).resolve().parent
 
 
 def create_tracking_number():
@@ -83,8 +85,24 @@ def create_tracking_number():
 
 
 def load_html():
-    with open("index.html", "r", encoding="utf-8") as file:
+    with open(BASE_DIR / "index.html", "r", encoding="utf-8") as file:
         return file.read()
+
+
+@app.get("/quick-courier-logo.png", include_in_schema=False)
+def quick_courier_logo():
+    logo_path = BASE_DIR / "quick-courier-logo.png"
+
+    if not logo_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="Quick Courier logo file not found",
+        )
+
+    return FileResponse(
+        path=logo_path,
+        media_type="image/png",
+    )
 
 
 def render_page(
