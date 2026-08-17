@@ -1,25 +1,33 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+src = Path("/mnt/data/Pasted text(2).txt")
+original = src.read_text(encoding="utf-8")
+
+html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SwiftCourier</title>
+<title>Quick Courier</title>
 
 <style>
 :root{
-    --primary:#155eef;
-    --dark:#101828;
-    --text:#344054;
-    --muted:#667085;
-    --border:#eaecf0;
+    --primary:#0b63f6;
+    --primary-dark:#0849b8;
+    --accent:#ff8a00;
+    --dark:#0f172a;
+    --text:#334155;
+    --muted:#64748b;
+    --border:#e2e8f0;
     --bg:#f8fafc;
     --white:#ffffff;
+    --success:#067647;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
     margin:0;
@@ -29,95 +37,371 @@ body{
 }
 
 .container{
-    width:min(1150px,92%);
+    width:min(1180px,92%);
     margin:auto;
 }
 
+/* ===========================
+   TOP BAR
+=========================== */
+.topbar{
+    background:var(--primary-dark);
+    color:#fff;
+    font-size:13px;
+}
+
+.topbar-inner{
+    min-height:36px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.topbar span{opacity:.95}
+
+/* ===========================
+   HEADER / NAV
+=========================== */
 nav{
-    background:white;
+    background:#fff;
     border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 4px 18px rgba(15,23,42,.04);
 }
 
 .nav{
-    min-height:70px;
+    min-height:78px;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:24px;
 }
 
 .logo{
     text-decoration:none;
-    color:var(--primary);
-    font-size:24px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--dark);
     font-weight:900;
+}
+
+.logo img{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+}
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+}
+
+.logo-text strong{
+    font-size:22px;
+    color:var(--primary-dark);
+}
+
+.logo-text small{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:.8px;
+    text-transform:uppercase;
 }
 
 .links{
     display:flex;
-    gap:20px;
+    align-items:center;
+    gap:8px;
     flex-wrap:wrap;
 }
 
 .links a{
     text-decoration:none;
     color:var(--text);
-    font-weight:700;
+    font-weight:750;
+    padding:10px 12px;
+    border-radius:8px;
 }
 
+.links a:hover{
+    color:var(--primary);
+    background:#eef5ff;
+}
+
+.admin-link{
+    background:var(--primary);
+    color:#fff!important;
+}
+
+.admin-link:hover{
+    background:var(--primary-dark)!important;
+}
+
+/* ===========================
+   ANNOUNCEMENT BAR
+=========================== */
+.notice-strip{
+    background:#fff7ed;
+    border-bottom:1px solid #fed7aa;
+    color:#9a3412;
+}
+
+.notice-inner{
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:14px;
+    font-weight:650;
+}
+
+.notice-label{
+    background:var(--accent);
+    color:#fff;
+    border-radius:6px;
+    padding:5px 9px;
+    font-size:12px;
+    font-weight:900;
+}
+
+/* ===========================
+   HERO
+=========================== */
 .hero{
-    padding:80px 0;
-    background:linear-gradient(135deg,#eef4ff,#f8fafc);
+    padding:72px 0 64px;
+    background:
+        radial-gradient(circle at 85% 10%, rgba(11,99,246,.13), transparent 30%),
+        linear-gradient(135deg,#eef5ff 0%,#f8fafc 60%,#fff7ed 100%);
 }
 
 .hero-grid{
     display:grid;
-    grid-template-columns:1.2fr .8fr;
-    gap:45px;
+    grid-template-columns:1.18fr .82fr;
+    gap:44px;
     align-items:center;
-}
-
-h1{
-    font-size:50px;
-    margin:15px 0;
-}
-
-p{
-    color:var(--muted);
-    line-height:1.6;
 }
 
 .badge{
     display:inline-block;
     background:#eaf2ff;
     color:var(--primary);
-    padding:7px 12px;
+    padding:8px 13px;
     border-radius:999px;
     font-size:13px;
-    font-weight:800;
+    font-weight:850;
 }
+
+h1{
+    font-size:54px;
+    line-height:1.05;
+    margin:16px 0;
+    letter-spacing:-1.5px;
+}
+
+.hero h1 span{color:var(--primary)}
+
+p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.hero-copy{
+    font-size:18px;
+    max-width:650px;
+}
+
+.actions{
+    display:flex;
+    gap:12px;
+    margin-top:28px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:13px 19px;
+    font-weight:850;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#e9eef5;
+    color:var(--dark);
+    transition:.2s ease;
+}
+
+.btn:hover{transform:translateY(-1px)}
+
+.primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.primary:hover{background:var(--primary-dark)}
+
+.secondary{
+    background:#fff;
+    border:1px solid var(--border);
+}
+
+.full{width:100%}
+
+.small{padding:8px 11px}
 
 .card,
 .result-card{
-    background:white;
+    background:#fff;
     border:1px solid var(--border);
-    border-radius:17px;
+    border-radius:18px;
     padding:25px;
-    box-shadow:0 12px 35px rgba(16,24,40,.05);
+    box-shadow:0 14px 38px rgba(15,23,42,.06);
 }
 
+.track-card{
+    border-top:4px solid var(--primary);
+}
+
+.track-card h2{
+    margin-top:0;
+    font-size:25px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    font:inherit;
+    background:#fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(11,99,246,.10);
+}
+
+textarea{min-height:92px}
+
+label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:800;
+    color:var(--text);
+}
+
+/* ===========================
+   QUICK LINKS / SERVICES
+=========================== */
+.section{
+    padding:56px 0;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.section-heading h2{
+    margin:8px 0;
+    font-size:34px;
+}
+
+.section-heading p{
+    max-width:680px;
+    margin:0 auto;
+}
+
+.quick-grid,
 .feature-grid{
-    padding:45px 0;
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:20px;
 }
 
+.quick-card{
+    text-decoration:none;
+    color:inherit;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px;
+    transition:.2s ease;
+}
+
+.quick-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+    border-color:#bfdbfe;
+}
+
+.icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eef5ff;
+    font-size:24px;
+    margin-bottom:14px;
+}
+
+.quick-card h3{margin:0 0 8px}
+
+/* ===========================
+   INFO PANEL
+=========================== */
+.info-panel{
+    background:var(--primary-dark);
+    color:#fff;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    padding:35px 0;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    margin-bottom:4px;
+}
+
+.stat span{
+    font-size:13px;
+    opacity:.88;
+}
+
+/* ===========================
+   PAGE CONTENT
+=========================== */
 .page{
     padding:55px 0 80px;
 }
 
 .page-title{
     font-size:40px;
+    margin:12px 0 24px;
 }
 
 .form-grid{
@@ -126,67 +410,7 @@ p{
     gap:18px;
 }
 
-.wide{
-    grid-column:1/-1;
-}
-
-label{
-    display:block;
-    margin-bottom:7px;
-    font-weight:750;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:12px 13px;
-    border:1px solid #d0d5dd;
-    border-radius:10px;
-    font:inherit;
-}
-
-textarea{
-    min-height:85px;
-}
-
-.btn{
-    border:0;
-    border-radius:10px;
-    padding:12px 18px;
-    font-weight:800;
-    cursor:pointer;
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    background:#e9eef5;
-    color:var(--dark);
-}
-
-.primary{
-    background:var(--primary);
-    color:white;
-}
-
-.secondary{
-    background:white;
-    border:1px solid var(--border);
-}
-
-.full{
-    width:100%;
-}
-
-.small{
-    padding:8px 11px;
-}
-
-.actions{
-    display:flex;
-    gap:12px;
-    margin-top:26px;
-}
+.wide{grid-column:1/-1}
 
 .search{
     display:grid;
@@ -194,9 +418,7 @@ textarea{
     gap:10px;
 }
 
-.result-card{
-    margin-top:20px;
-}
+.result-card{margin-top:20px}
 
 .result-head{
     display:flex;
@@ -204,6 +426,7 @@ textarea{
     align-items:center;
     border-bottom:1px solid var(--border);
     padding-bottom:16px;
+    gap:16px;
 }
 
 .details{
@@ -222,23 +445,23 @@ small{
 .status{
     display:inline-block;
     background:#ecfdf3;
-    color:#067647;
+    color:var(--success);
     border:1px solid #abefc6;
     border-radius:999px;
     padding:6px 10px;
     font-size:13px;
-    font-weight:800;
+    font-weight:850;
 }
 
 .message{
     margin-top:15px;
     color:#b42318;
-    font-weight:700;
+    font-weight:750;
 }
 
 .table-card{
     overflow-x:auto;
-    background:white;
+    background:#fff;
     border:1px solid var(--border);
     border-radius:17px;
 }
@@ -256,8 +479,8 @@ td{
 }
 
 th{
-    background:#f9fafb;
-    color:#475467;
+    background:#f8fafc;
+    color:#475569;
 }
 
 .status-form{
@@ -271,17 +494,61 @@ th{
     color:var(--muted);
 }
 
+/* ===========================
+   FOOTER
+=========================== */
 footer{
-    text-align:center;
-    padding:25px 0;
-    background:white;
-    border-top:1px solid var(--border);
-    color:var(--muted);
+    background:#0f172a;
+    color:#cbd5e1;
+    margin-top:30px;
 }
 
-.page-block{
-    display:none;
+.footer-grid{
+    padding:42px 0 30px;
+    display:grid;
+    grid-template-columns:1.4fr .8fr .8fr;
+    gap:34px;
 }
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.footer-brand img{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:10px;
+    padding:4px;
+}
+
+.footer-brand strong{
+    color:#fff;
+    font-size:21px;
+}
+
+.footer-links a{
+    display:block;
+    color:#cbd5e1;
+    text-decoration:none;
+    margin:9px 0;
+}
+
+.footer-links a:hover{color:#fff}
+
+.footer-bottom{
+    border-top:1px solid rgba(255,255,255,.12);
+    text-align:center;
+    padding:17px 0;
+    font-size:13px;
+    color:#94a3b8;
+}
+
+.page-block{display:none}
 
 body[data-page="home"] #home-page,
 body[data-page="book"] #book-page,
@@ -290,145 +557,228 @@ body[data-page="admin"] #admin-page{
     display:block;
 }
 
-@media(max-width:800px){
+@media(max-width:900px){
+    .hero-grid,
+    .quick-grid,
+    .feature-grid,
+    .info-grid,
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:720px){
+    .topbar-inner{
+        justify-content:center;
+        text-align:center;
+        padding:8px 0;
+    }
+
     .nav{
         flex-direction:column;
         align-items:flex-start;
-        gap:14px;
-        padding:18px 0;
+        padding:15px 0;
+    }
+
+    .links{
+        width:100%;
     }
 
     .hero-grid,
+    .quick-grid,
     .feature-grid,
+    .info-grid,
+    .footer-grid,
     .form-grid,
     .details{
         grid-template-columns:1fr;
     }
 
-    .wide{
-        grid-column:1;
-    }
+    .wide{grid-column:1}
 
-    .search{
-        grid-template-columns:1fr;
-    }
+    .search{grid-template-columns:1fr}
 
-    h1{
-        font-size:38px;
-    }
+    h1{font-size:40px}
+
+    .page-title{font-size:34px}
 }
 </style>
 </head>
 
 <body data-page="{{PAGE}}">
 
+<div class="topbar">
+    <div class="container topbar-inner">
+        <span>📦 Fast & Reliable Courier Services</span>
+        <span>Customer Support: Quick Courier</span>
+    </div>
+</div>
+
 <nav>
     <div class="container nav">
-        <a href="/" class="logo">SwiftCourier</a>
+        <a href="/" class="logo">
+            <img src="/quick-courier-logo.png" alt="Quick Courier Logo">
+            <span class="logo-text">
+                <strong>Quick Courier</strong>
+                <small>Fast • Safe • Reliable</small>
+            </span>
+        </a>
 
         <div class="links">
             <a href="/">Home</a>
             <a href="/book">Book Courier</a>
             <a href="/track">Track Parcel</a>
-            <a href="/admin">Admin</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="/admin" class="admin-link">Admin</a>
         </div>
     </div>
 </nav>
 
+<div class="notice-strip">
+    <div class="container notice-inner">
+        <span class="notice-label">NOTICE</span>
+        <span>Track your shipment anytime using your unique Quick Courier tracking number.</span>
+    </div>
+</div>
 
 <section id="home-page" class="page-block">
 
     <div class="hero">
-
         <div class="container hero-grid">
 
             <div>
-                <span class="badge">Courier Management System</span>
+                <span class="badge">Professional Courier Management Portal</span>
 
-                <h1>Send. Track. Deliver.</h1>
+                <h1>Delivering with <span>Speed & Trust.</span></h1>
 
-                <p>
-                    Book courier shipments, save them in PostgreSQL
-                    and track delivery status using one simple website.
+                <p class="hero-copy">
+                    Quick Courier gives you a simple and professional way to book shipments,
+                    track parcels and manage delivery operations from one secure platform.
                 </p>
 
                 <div class="actions">
-
-                    <a href="/book" class="btn primary">
-                        Book Courier
-                    </a>
-
-                    <a href="/track" class="btn secondary">
-                        Track Parcel
-                    </a>
-
+                    <a href="/book" class="btn primary">📦 Book Courier</a>
+                    <a href="/track" class="btn secondary">🔎 Track Parcel</a>
                 </div>
             </div>
 
-            <div class="card">
-
+            <div class="card track-card">
+                <span class="badge">Live Tracking</span>
                 <h2>Track Your Parcel</h2>
+                <p>Enter your tracking number to check the latest shipment status.</p>
 
                 <form action="/track" method="get">
-
                     <label>Tracking Number</label>
-
                     <input
                         name="tracking_number"
                         placeholder="SC-XXXXXXXXXX"
                         required
                     >
-
                     <br><br>
-
-                    <button class="btn primary full">
-                        Track Now
-                    </button>
-
+                    <button class="btn primary full">Track Now</button>
                 </form>
-
             </div>
 
         </div>
-
     </div>
 
+    <section class="section">
+        <div class="container">
 
-    <div class="container feature-grid">
+            <div class="section-heading">
+                <span class="badge">Quick Access</span>
+                <h2>Courier Services at Your Fingertips</h2>
+                <p>
+                    Everything you need to create, track and manage your courier shipments.
+                </p>
+            </div>
 
-        <div class="card">
-            <h3>📦 Book Courier</h3>
-            <p>Create a new courier shipment.</p>
+            <div class="quick-grid">
+                <a href="/book" class="quick-card">
+                    <div class="icon">📦</div>
+                    <h3>Book a Courier</h3>
+                    <p>Create a new shipment with sender, receiver and parcel details.</p>
+                </a>
+
+                <a href="/track" class="quick-card">
+                    <div class="icon">🔎</div>
+                    <h3>Track Parcel</h3>
+                    <p>Check your shipment status using the unique tracking number.</p>
+                </a>
+
+                <a href="/admin" class="quick-card">
+                    <div class="icon">🚚</div>
+                    <h3>Manage Delivery</h3>
+                    <p>Operations team can view shipments and update delivery status.</p>
+                </a>
+            </div>
+
         </div>
+    </section>
 
-        <div class="card">
-            <h3>🔎 Track Parcel</h3>
-            <p>Search using the unique tracking number.</p>
+    <section id="services" class="section" style="background:#fff;">
+        <div class="container">
+
+            <div class="section-heading">
+                <span class="badge">Our Services</span>
+                <h2>Built for Reliable Deliveries</h2>
+                <p>
+                    A modern courier workflow designed for fast booking, transparent tracking
+                    and efficient shipment management.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="card">
+                    <h3>⚡ Quick Booking</h3>
+                    <p>Book documents, boxes, electronics, clothing and other parcels in minutes.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📍 Shipment Tracking</h3>
+                    <p>Customers can track parcel status anytime using a unique tracking number.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🛡️ Reliable Management</h3>
+                    <p>Centralized shipment records help your team manage deliveries efficiently.</p>
+                </div>
+            </div>
+
         </div>
+    </section>
 
-        <div class="card">
-            <h3>🚚 Manage Delivery</h3>
-            <p>Admin can update delivery status.</p>
+    <section class="info-panel">
+        <div class="container info-grid">
+            <div class="stat">
+                <strong>24/7</strong>
+                <span>Online Tracking</span>
+            </div>
+            <div class="stat">
+                <strong>Fast</strong>
+                <span>Booking Process</span>
+            </div>
+            <div class="stat">
+                <strong>Secure</strong>
+                <span>Shipment Records</span>
+            </div>
+            <div class="stat">
+                <strong>Easy</strong>
+                <span>Delivery Management</span>
+            </div>
         </div>
-
-    </div>
+    </section>
 
 </section>
 
-
 <section id="book-page" class="page-block page">
-
     <div class="container">
 
         <span class="badge">New Shipment</span>
-
         <h1 class="page-title">Book a Courier</h1>
 
-        <form
-            class="card form-grid"
-            method="post"
-            action="/book"
-        >
+        <form class="card form-grid" method="post" action="/book">
 
             <div>
                 <label>Sender Name</label>
@@ -467,7 +817,6 @@ body[data-page="admin"] #admin-page{
 
             <div>
                 <label>Parcel Type</label>
-
                 <select name="parcel_type">
                     <option>Document</option>
                     <option>Box</option>
@@ -479,7 +828,6 @@ body[data-page="admin"] #admin-page{
 
             <div>
                 <label>Weight (kg)</label>
-
                 <input
                     type="number"
                     name="weight"
@@ -491,43 +839,28 @@ body[data-page="admin"] #admin-page{
             </div>
 
             <div class="wide">
-
-                <button
-                    class="btn primary full"
-                    type="submit"
-                >
+                <button class="btn primary full" type="submit">
                     Create Shipment
                 </button>
-
             </div>
 
         </form>
-
     </div>
-
 </section>
 
-
 <section id="track-page" class="page-block page">
-
     <div class="container">
 
         <span class="badge">Parcel Tracking</span>
-
         <h1 class="page-title">Track Parcel</h1>
 
         <form class="card search" action="/track" method="get">
-
             <input
                 name="tracking_number"
                 placeholder="SC-XXXXXXXXXX"
                 required
             >
-
-            <button class="btn primary">
-                Track
-            </button>
-
+            <button class="btn primary">Track</button>
         </form>
 
         <div class="message">
@@ -537,22 +870,16 @@ body[data-page="admin"] #admin-page{
         {{SHIPMENT_RESULT}}
 
     </div>
-
 </section>
 
-
 <section id="admin-page" class="page-block page">
-
     <div class="container">
 
         <span class="badge">Operations</span>
-
         <h1 class="page-title">Admin Dashboard</h1>
 
         <div class="table-card">
-
             <table>
-
                 <thead>
                     <tr>
                         <th>Tracking</th>
@@ -567,21 +894,53 @@ body[data-page="admin"] #admin-page{
                 <tbody>
                     {{ADMIN_ROWS}}
                 </tbody>
-
             </table>
+        </div>
 
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="container footer-grid">
+
+        <div>
+            <div class="footer-brand">
+                <img src="/quick-courier-logo.png" alt="Quick Courier Logo">
+                <strong>Quick Courier</strong>
+            </div>
+            <p>
+                A modern courier management platform for booking, tracking
+                and delivery operations.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <strong style="color:#fff;">Quick Links</strong>
+            <a href="/">Home</a>
+            <a href="/book">Book Courier</a>
+            <a href="/track">Track Parcel</a>
+            <a href="/admin">Admin</a>
+        </div>
+
+        <div class="footer-links">
+            <strong style="color:#fff;">Contact</strong>
+            <a href="#">Customer Support</a>
+            <a href="#">Help & Information</a>
+            <a href="#">Terms & Privacy</a>
         </div>
 
     </div>
 
-</section>
-
-
-<footer>
-    
-    © 2026 SwiftCourier. All rights reserved.
-
+    <div class="footer-bottom">
+        © 2026 Quick Courier. All rights reserved.
+    </div>
 </footer>
 
 </body>
 </html>
+'''
+
+out = Path("/mnt/data/index.html")
+out.write_text(html, encoding="utf-8")
+
+print("Created:", out)
